@@ -1,14 +1,15 @@
 {
   "name": "noderenogy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Utility to retrieve data from Renogy solar controllers and publish it to MQTT, written in NodeJS",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
+    "async-mqtt": "^2.6.1",
     "modbus-serial": "^8.0.4",
     "mqtt": "^4.2.8",
     "yargs": "^17.2.1"
