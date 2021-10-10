@@ -1,0 +1,16 @@
+{
+  "name": "noderenogy",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "modbus-serial": "^8.0.4",
+    "mqtt": "^4.2.8",
+    "yargs": "^17.2.1"
+  }
+}
