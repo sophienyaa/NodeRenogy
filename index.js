@@ -3,11 +3,12 @@ const mqtt = require('./mqtt');
 const renogy = require('./renogy');
 
 async function main() {
-    
+
     await cli.checkArgs();
     const args = cli.args;
     await renogy.begin();
- 
+
+    //poll controller and publish at the interval specified
     setInterval(
         async function() {
             const result = await renogy.getData();   

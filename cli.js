@@ -20,12 +20,12 @@ const argv = yargs
     })
     .option('mqttUser', {
         alias: 'u',
-        description: 'The username for MQTT Broker (e.g -u mqttUser)',
+        description: 'The username for your MQTT Broker (e.g -u mqttUser)',
         type: 'string',
     })
     .option('mqttPass', {
         alias: 'p',
-        description: 'The password for MQTT Broker (e.g -p mqttPass)',
+        description: 'The password for your MQTT Broker (e.g -p mqttPass)',
         type: 'string',
     })
     .option('mqttTopic', {
