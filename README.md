@@ -25,7 +25,27 @@ TODO: Images
 
 ### Using the utility
 
-You simply run it on the device your controller is connected to. I use a Raspberry Pi Zero W, which is more than powerful enough to handle this use case.
+Ideally you would install/run this on a device that is connected to your solar controller all the time. I use a Raspberry Pi Zero W, which is more than powerful enough for this use case. This also assumes you have a MQTT broker setup and running already. 
+
+If you don't want to use MQTT you can output the results to the console. Support for other output methods may come at a later date.
+
+This code was written using NodeJS v16, so you will first need to install that. Other versions may work, but have not been tested.
+
+The Pi Zero doesn't have offical support for newer version of NodeJS, so follow the instructions [here](https://hassancorrigan.com/blog/install-nodejs-on-a-raspberry-pi-zero/) to get it installed. (will also work with a Pi 1)
+
+If you are using a Pi 2 or later, follow the instructions [here](https://lindevs.com/install-node-js-and-npm-on-raspberry-pi/) to install the offical NodeSource build.
+
+Once you've got NodeJS installed, then follow the below instructions.
+
+1. Clone this repository (or donwload it) by running
+
+`git clone https://github.com/mickwheelz/NodeRenogy.git`
+
+2. Install the dependancies by running
+
+`npm install`
+
+3. Run the utility on the device your controller is connected to, see below for examples.
 
 Basic Example:
 
@@ -37,7 +57,6 @@ The utiluty has the following options:
 
 |Argument |Alias |Description | Example |
 |---------|------|----------|-----|
-|--version||Show version number|  |              
 |--serialPort|-s|REQUIRED: Serial port your controller is connected to|-s /dev/ttyUSB0|
 |--baudRate|-b|The baud rate to use for serial communications, defaults to 9600|-b 14400|
 |--mqttBroker|-m|The address of your MQTT Broker|-m 192.168.0.10|
@@ -47,6 +66,7 @@ The utiluty has the following options:
 |--pollingInterval|-i|How frequently to poll the controller in seconds, defaults to 60|-i 90|
 |--debug|-d|Enable or disable debugging mode, it is disabled by default|-d true|   
 |--help|-h|Show help ||
+|--version||Show version number|  |              
 
 ### Getting data into Home Assistant
 
