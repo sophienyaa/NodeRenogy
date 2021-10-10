@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "mickwheelz",
   "license": "MIT",
   "dependencies": {
     "async-mqtt": "^2.6.1",
