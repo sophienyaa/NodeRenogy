@@ -70,4 +70,23 @@ The utiluty has the following options:
 
 ### Getting data into Home Assistant
 
-TODO
+The values can be displayed in Home Assistant by adding them as [sensors](https://www.home-assistant.io/integrations/sensor.mqtt/) in the `configuration.yaml` files. 
+
+Here is an example, you can add whichever values you like.
+
+```
+sensor:
+  - platform: mqtt
+    name: "Current Battery Capacity"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battCap'] }}"
+    unit_of_measurement: "%"
+    device_class: battery
+
+- platform: mqtt
+    name: "Current Battery Voltage"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battV'] }}"
+    unit_of_measurement: "V"
+    device_class: battery
+```
