@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const cli = require('./cli');
 const mqtt = require('./mqtt');
 const renogy = require('./renogy');
