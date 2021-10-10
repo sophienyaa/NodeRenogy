@@ -52,6 +52,24 @@ const renogyValues = {
         this.battVMinToday = (rawData[11] * 0.1).toFixed(2);
         //Register 0x10C - Min Battery Voltage Today - 12
         this.battVMaxToday = (rawData[12] * 0.1).toFixed(2);
+        //Register 0x10D - Max Charge Current Today - 13
+        this.chgCMaxToday = (rawData[13] * 0.01).toFixed(2);
+        //Register 0x10E - Max Discharge Current Today - 14
+        this.dischgCMaxToday = (rawData[14] * 0.1).toFixed(2);
+        //Register 0x10F - Max Charge Power Today - 15 
+        this.chgPMaxToday = (rawData[15]).toFixed(2);
+        //Register 0x110- Max Discharge Power Today - 16
+        this.dischgPMaxToday = (rawData[16]).toFixed(2);
+        //Register 0x111- Charge Amp/Hrs Today - 17
+        this.chgAHToday = (rawData[17]).toFixed(2);
+        //Register 0x112- Discharge Amp/Hrs Today - 18
+        this.dischgAHToday = (rawData[18]).toFixed(2);
+        //Register 0x113- Charge Watt/Hrs Today - 19
+        this.chgWHToday = (rawData[19]).toFixed(2);
+        //Register 0x114- Discharge Watt/Hrs Today - 20
+        this.dischgWHToday = (rawData[20]).toFixed(2);
+        //Register 0x115- Controller Uptime (Days) - 21
+        this.uptime = rawData[21];
         //TODO: More registers
     }
 };
