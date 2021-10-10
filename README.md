@@ -61,7 +61,7 @@ The utiluty has the following options:
 |--baudRate|-b|The baud rate to use for serial communications, defaults to 9600|-b 14400|
 |--mqttBroker|-m|The address of your MQTT Broker|-m 192.168.0.10|
 |--mqttUser|-u|The username for your MQTT Broker|-u mqttUser|
-| --mqttPass|-p|The password for your MQTT Broker|-p mqttPass| 
+|--mqttPass|-p|The password for your MQTT Broker|-p mqttPass| 
 |--mqttTopic|-t| MQTT topic to publish to defaults to 'NodeRenogy'|-t MyTopic|
 |--pollingInterval|-i|How frequently to poll the controller in seconds, defaults to 60|-i 90|
 |--debug|-d|Enable or disable debugging mode, it is disabled by default|-d true|   
