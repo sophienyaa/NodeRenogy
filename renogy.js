@@ -24,9 +24,9 @@ const renogyValues = {
         //Register 0x100 - Battery Capacity - 0
         this.battCap = rawData[0];
         //Register 0x101 - Battery Voltage - 1
-        this.battV = rawData[1] * 0.1;
+        this.battV = (rawData[1] * 0.1).toFixed(2);
         //Register 0x102 - Battery Charge Current - 2
-        this.battC = rawData[2] * 0.01;
+        this.battC = (rawData[2] * 0.01).toFixed(2);
         //TODO: Register 0x103 - Battery Temperature - 3
         /*this.battTemp = function() {
             const tempBits = rawData[3] >> 8;
