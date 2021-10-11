@@ -1,6 +1,17 @@
 # NodeRenogy
 
-Utility to retrieve data from Renogy solar controllers and publish it to MQTT, written in NodeJS
+Utility to retrieve data from Renogy solar controllers and publish it to MQTT, written in NodeJS.
+
+Data can then be surfaced in Home Assistant, or anything else that can read from a MQTT bus.
+
+### Compatability
+
+See below table, in theory this should work with any Renogy solar controller, but the below have been tested.
+If you have success with one not listed here, please let me know by raising an issue!
+
+|Controller|Interface|Notes|Status|
+|----------|---------|-----|------|
+|Renogy Wanderer|RS232|Has no switched load, so load values always 0|✅|
 
 ### Connecting your Controller
 
@@ -21,27 +32,32 @@ The RJ12 connector on the controller has 6 pins, with the first 3 being needed f
 5. VCC
 6. VCC
 
-TODO: Images
+![Wiring Diagram](cable_wiring_diagram.png)
+
 
 ### Using the utility
 
-Ideally you would install/run this on a device that is connected to your solar controller all the time. I use a Raspberry Pi Zero W, which is more than powerful enough for this use case. This also assumes you have a MQTT broker setup and running already. 
+TODO: Document steps for running as service
 
-If you don't want to use MQTT you can output the results to the console. Support for other output methods may come at a later date.
+Ideally you would install/run this on a device that is connected to your solar controller all the time. I use a Raspberry Pi 0 W, which is more than powerful enough for this use case. 
 
-This code was written using NodeJS v16, so you will first need to install that. Other versions may work, but have not been tested.
+This also assumes you have a MQTT broker setup and running already. If you don't want to use MQTT you can output the results to the console. Support for other output methods may come at a later date.
 
-The Pi Zero doesn't have offical support for newer version of NodeJS, so follow the instructions [here](https://hassancorrigan.com/blog/install-nodejs-on-a-raspberry-pi-zero/) to get it installed. (will also work with a Pi 1)
+You will first need to ensure you have NodeJS v16+ installed on your device.
+
+The Pi 0/1 doesn't have offical support for newer version of NodeJS, so follow the instructions [here](https://hassancorrigan.com/blog/install-nodejs-on-a-raspberry-pi-zero/) to get it installed.
 
 If you are using a Pi 2 or later, follow the instructions [here](https://lindevs.com/install-node-js-and-npm-on-raspberry-pi/) to install the offical NodeSource build.
 
 Once you've got NodeJS installed, then follow the below instructions.
 
-1. Clone this repository (or donwload it) by running
+1. Clone this repository (or donwload it) by running;
 
 `git clone https://github.com/mickwheelz/NodeRenogy.git`
 
-2. Install the dependancies by running
+2. Change to the `NodeRenogy` directory and install the dependancies by running the below commands
+
+`cd NodeRenogy`
 
 `npm install`
 
@@ -51,9 +67,9 @@ Basic Example:
 
 `node index.js -s /dev/ttyUSB0 -m 192.168.0.10`
 
-This would use serial port `/dev/ttyUSB0` and connect to MQTT Broker at `192.168.0.10` with no user/password.
+This would use serial port `/dev/ttyUSB0` and connect to MQTT Broker at `192.168.0.10` with no user/password, publishing to the `NodeRenogy/state` topic ever 60s.
 
-The utiluty has the following options:
+The utility supports using different polling intervals and topics, as well as MQTT brokers that need authentication, please see below for a full list of options.
 
 |Argument |Alias |Description | Example |
 |---------|------|----------|-----|
@@ -72,7 +88,9 @@ The utiluty has the following options:
 
 The values can be displayed in Home Assistant by adding them as [sensors](https://www.home-assistant.io/integrations/sensor.mqtt/) in the `configuration.yaml` files. 
 
-Here is an example, you can add whichever values you like.
+Essentially you just need to extract the values from the JSON payload published to MQTT. For each value you want to use in Home Assistant, add a MQTT sensor entry in your config file.
+
+See below for some examples;
 
 ```
 sensor:
