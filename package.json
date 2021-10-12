@@ -15,6 +15,8 @@
     "async-mqtt": "^2.6.1",
     "modbus-serial": "^8.0.4",
     "mqtt": "^4.2.8",
+    "pino": "^6.13.3",
+    "pino-pretty": "^7.0.1",
     "yargs": "^17.2.1"
   }
 }
