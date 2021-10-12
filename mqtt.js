@@ -3,7 +3,7 @@ const mqtt = require('async-mqtt');
 const logger = require('./logger');
 const args = cli.args;
 
-const client = MQTT.connect(`tcp://${args.mqttbroker}`, mqttOptions);
+const client = mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions);
 
 
 const mqttOptions = {
