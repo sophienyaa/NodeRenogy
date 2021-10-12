@@ -11,7 +11,7 @@ const mqttOptions = {
 
 logger.trace('Connecting to MQTT broker...');
 logger.trace(mqttOptions, 'With MQTT options...');
-const client = await mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions)
+const client = mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions)
 
 if(client.connected) {
     logger.info('Connected to MQTT Broker!');
