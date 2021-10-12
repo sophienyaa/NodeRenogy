@@ -13,8 +13,6 @@ async function main() {
         logger.trace(args, 'With arguments...')
         await renogy.begin();
 
-        await mqtt.begin();
-
         setInterval(
             async function() {
                 const result = await renogy.getData();   
