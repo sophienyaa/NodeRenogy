@@ -35,15 +35,15 @@ const argv = yargs
     })
     .option('pollinginterval', {
         alias: 'i',
-        description: 'How frequently to poll the controller in seconds, defaults to 60 (e.g -i 90)',
+        description: 'How frequently to poll the controller in seconds, defaults to 10 (e.g -i 60)',
         type: 'integer',
-        default: 60
+        default: 10
     })
     .option('loglevel', {
         alias: 'l',
         description: 'Logging level to use, values are trace, debug, info, warn, error, fatal. Defaults to error',
         type: 'string',
-        default: 'error'
+        default: 'info'
     })
     .choices('loglevel', ['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
     .help()

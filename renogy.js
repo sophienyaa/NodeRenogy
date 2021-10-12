@@ -80,7 +80,7 @@ module.exports = {
         try {
             modbusClient.setTimeout(500);
             await modbusClient.connectRTUBuffered(args.serialport, { baudRate: args.baudrate });
-            logger.trace('Connected to controller!');
+            logger.info('Connected to controller!');
         }
         catch(e) {
             logger.error(e);
