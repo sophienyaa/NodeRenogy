@@ -13,6 +13,8 @@ async function main() {
         logger.trace(args, 'With arguments...')
         await renogy.begin();
 
+        await renogy.getControllerInfo();
+
         setInterval(
             async function() {
                 const result = await renogy.getData();   
