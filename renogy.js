@@ -8,18 +8,6 @@ const numRegisters = 30;
 const args = cli.args;
 
 const renogyValues = {
-    /*battCap:0,
-    battV:0,
-    battC:0,
-    battTemp:0,
-    loadV:0,
-    loadC:0,
-    loadP:0,
-    solarV:0,
-    solarC:0,
-    solarP:0,
-    battVMinToday:0,
-    battVMaxToday:0,*/
     setData: function(rawData) {
         //Register 0x100 - Battery Capacity - 0
         this.battCap = rawData[0];
@@ -71,6 +59,7 @@ const renogyValues = {
         //Register 0x115- Controller Uptime (Days) - 21
         this.uptime = rawData[21];
         //TODO: More registers
+
     }
 };
 
@@ -100,6 +89,28 @@ module.exports = {
                     renogyValues.setData(data.data);
                     logger.trace(renogyValues, 'Calculated data from controller:');
                     return renogyValues;
+                }
+            }
+        }
+        catch(e) {
+            logger.error(e);
+            process.exit(1);
+        }
+    },
+    getControllerInfo: function() {
+        try{
+            if(!modbusClient.isOpen) {
+                this.begin();
+            }
+            if(modbusClient.isOpen) {
+                //first 15 registers contain controller information
+                let data =  await modbusClient.readHoldingRegisters(0x00A, 15);
+                if(data.data) {
+                    /*logger.trace(data.data, 'Raw data from controller:');
+                    renogyValues.setData(data.data);
+                    logger.trace(renogyValues, 'Calculated data from controller:');
+                    return renogyValues;*/
+                    console.log(data.data);
                 }
             }
         }
