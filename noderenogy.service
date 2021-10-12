@@ -2,7 +2,7 @@
 Description=NodeRenogy Service
 
 [Service]
-ExecStart=/usr/bin/node /home/pi/NodeRenogy/index.js -s /dev/ttyUSB0 -m 192.168.199.10
+ExecStart=node-renogy /dev/ttyUSB0 -m 192.168.199.10
 Restart=always
 User=pi
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
