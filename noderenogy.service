@@ -4,12 +4,10 @@ Description=NodeRenogy Service
 [Service]
 ExecStart=node-renogy
 Restart=always
-User=pi
-# Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
-Group=pi
+User=nobody
+Group=nogroup
+WorkingDirectory=/home/pi/NodeRenogy
 Environment=PATH=/usr/bin:/usr/local/bin
-Environment=NODE_ENV=production
-WorkingDirectory=/home/pi/NodeRenogy     
 
 [Install]
 WantedBy=multi-user.target
