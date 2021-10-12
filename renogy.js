@@ -104,7 +104,7 @@ module.exports = {
             }
             if(modbusClient.isOpen) {
                 //first 15 registers contain controller information
-                let data =  await modbusClient.readHoldingRegisters(0x00A, 15);
+                let data =  await modbusClient.readHoldingRegisters(0x00A, 1);
                 if(data.data) {
                     /*logger.trace(data.data, 'Raw data from controller:');
                     renogyValues.setData(data.data);
