@@ -10,19 +10,19 @@ async function main() {
 
     try {
         const args = cli.args;
-
         logger.trace(args, 'With arguments...')
-
         await renogy.begin();
 
-        //poll controller and publish at the interval specified
         setInterval(
             async function() {
                 const result = await renogy.getData();   
 
-                //if we have MQTT broker, try to publish
                 if(args.mqttbroker) {
                     await mqtt.publish(result);
+                }
+                else {
+                    logger.trace('No MQTT broker specified!');
+                    console.log(result);
                 }
             }, 
             args.pollinginterval * 100

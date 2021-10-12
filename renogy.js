@@ -3,7 +3,6 @@ const logger = require('./logger');
 const ModbusRTU = require("modbus-serial");
 const modbusClient = new ModbusRTU();
 
-//as per renogy docs
 const startRegister = 0x100;
 const numRegisters = 30;
 const args = cli.args;
@@ -97,8 +96,9 @@ module.exports = {
             if(modbusClient.isOpen) {
                 let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
                 if(data.data) {
+                    logger.trace(data.data, 'Raw data from controller:');
                     renogyValues.setData(data.data);
-                    logger.trace(renogyValues, 'Got data from controller...');
+                    logger.trace(renogyValues, 'Calculated data from controller:');
                     return renogyValues;
                 }
             }

@@ -3,7 +3,7 @@ const yargs = require('yargs');
 const argv = yargs
     .option('serialport', {
         alias: 's',
-        description: 'REQUIRED: Serial port your controller is connected to (e.g -s /dev/ttyUSB0)',
+        description: 'Serial port your controller is connected to (e.g -s /dev/ttyUSB0)',
         type: 'string',
     })
     .option('baudrate', {
@@ -45,10 +45,13 @@ const argv = yargs
         type: 'string',
         default: 'error'
     })
+    .choices('loglevel', ['trace', 'debug', 'info', 'warn', 'error', 'fatal'])
     .help()
     .alias('help', 'h')
+    .epilogue('For more information, check out the project repository at https://github.com/mickwheelz/NodeRenogy')
     .env('NODERENOGY')
     .demandOption('serialport', 'You must specify a serial port')
+    .wrap(yargs.terminalWidth())
     .argv;
 
 module.exports = {
