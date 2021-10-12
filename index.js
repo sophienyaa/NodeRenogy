@@ -6,12 +6,14 @@ const logger = require('./logger');
 
 async function main() {
 
-    logger.trace('Starting NodeRenogy...');
+    logger.info('Starting NodeRenogy...');
 
     try {
         const args = cli.args;
         logger.trace(args, 'With arguments...')
         await renogy.begin();
+
+        await mqtt.begin();
 
         setInterval(
             async function() {
@@ -25,7 +27,7 @@ async function main() {
                     console.log(result);
                 }
             }, 
-            args.pollinginterval * 100
+            args.pollinginterval * 1000
         );
     }
     catch(e) {
