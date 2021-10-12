@@ -14,7 +14,10 @@ const renogyValues = {
         //Register 0x101 - Battery Voltage - 1
         this.battV = (rawData[1] * 0.1).toFixed(2);
         //Register 0x102 - Battery Charge Current - 2
-        this.battC = (rawData[2] * 0.01).toFixed(2);
+        this.battT = parseInt(rawData[2].toString(16).substring(0,2), 16);
+
+        this.ctrlT = parseInt(rawData[2].toString(16).substring(2,5), 16);
+
         //TODO: Register 0x103 - Battery Temperature - 3
         /*this.battTemp = function() {
             const tempBits = rawData[3] >> 8;
@@ -111,6 +114,7 @@ module.exports = {
                     logger.trace(renogyValues, 'Calculated data from controller:');
                     return renogyValues;*/
                     console.log(data.data);
+                    console.log(data.data[0].toString(16))
                 }
             }
         }
