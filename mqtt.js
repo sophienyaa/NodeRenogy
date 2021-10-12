@@ -1,22 +1,24 @@
 const cli = require('./cli');
 const mqtt = require('async-mqtt');
+const logger = require('./logger');
 const args = cli.args;
 
 const mqttOptions = {
-    username: args.mqttUser,
-    password: args.mqttPass,
+    username: args.mqttuser,
+    password: args.mqttpass,
     clientId: `nodeRenogy_${Math.random().toString(16).substr(2,8)}`    
 };
 
 module.exports = {
     publish: async function(data) {
-        const client = await mqtt.connectAsync(`tcp://${args.mqttBroker}`, mqttOptions)
+        logger.trace('Connecting to MQTT broker...');
+        logger.trace(mqttOptions, 'With MQTT options...');
+        const client = await mqtt.connectAsync(`tcp://${args.mqttbroker}`, mqttOptions)
         try {
-            await client.publish(`${args.mqttTopic}/state`, JSON.stringify(data));
+            await client.publish(`${args.mqtttopic}/state`, JSON.stringify(data));
             await client.end();
         } catch (e){
-            console.log(e.stack);
-            process.exit(1);
+            logger.error(e);
         }
     }
 }

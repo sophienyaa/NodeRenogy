@@ -2,29 +2,36 @@
 const cli = require('./cli');
 const mqtt = require('./mqtt');
 const renogy = require('./renogy');
+const logger = require('./logger');
 
 async function main() {
 
-    await cli.checkArgs();
-    const args = cli.args;
-    await renogy.begin();
+    logger.trace('Starting NodeRenogy...');
 
-    //poll controller and publish at the interval specified
-    setInterval(
-        async function() {
-            const result = await renogy.getData();   
+    try {
+        const args = cli.args;
 
-            //if we have MQTT broker, try to publish
-            if(args.mqttBroker) {
-                await mqtt.publish(result);
-            } 
-            //if not, or debug is on, log to console
-            if(args.debug || !args.mqttBroker) {
-                console.log(JSON.stringify(result));
-            }
-        }, 
-        args.pollingInterval * 100
-    );
+        logger.trace(args, 'With arguments...')
+
+        await renogy.begin();
+
+        //poll controller and publish at the interval specified
+        setInterval(
+            async function() {
+                const result = await renogy.getData();   
+
+                //if we have MQTT broker, try to publish
+                if(args.mqttbroker) {
+                    await mqtt.publish(result);
+                }
+            }, 
+            args.pollinginterval * 100
+        );
+    }
+    catch(e) {
+        logger.error(e);
+        process.exit(1);
+    }
 }
 
 main();

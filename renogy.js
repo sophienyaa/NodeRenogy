@@ -1,4 +1,5 @@
 const cli = require('./cli');
+const logger = require('./logger');
 const ModbusRTU = require("modbus-serial");
 const modbusClient = new ModbusRTU();
 
@@ -76,19 +77,33 @@ const renogyValues = {
 
 module.exports = {
     begin: async function(){
-        modbusClient.setTimeout(500);
-        await modbusClient.connectRTUBuffered(args.serialPort, { baudRate: args.baudRate });
+        logger.trace('Connecting to controller...');
+        try {
+            modbusClient.setTimeout(500);
+            await modbusClient.connectRTUBuffered(args.serialport, { baudRate: args.baudrate });
+        }
+        catch(e) {
+            logger.error(e);
+            process.exit(1);
+        }
     },
     getData: async function() {
-        if(!modbusClient.isOpen) {
-            this.begin();
-        }
-        if(modbusClient.isOpen) {
-            let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
-            if(data.data) {
-                renogyValues.setData(data.data);
-                return renogyValues;
+        logger.trace('Getting data from controller...');
+        try{
+            if(!modbusClient.isOpen) {
+                this.begin();
             }
+            if(modbusClient.isOpen) {
+                let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
+                if(data.data) {
+                    renogyValues.setData(data.data);
+                    return renogyValues;
+                }
+            }
+        }
+        catch(e) {
+            logger.error(e);
+            process.exit(1);
         }
     }
 }
