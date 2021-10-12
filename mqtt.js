@@ -1,5 +1,3 @@
-
-   
 const cli = require('./cli');
 const mqtt = require('async-mqtt');
 const logger = require('./logger');
@@ -16,6 +14,7 @@ module.exports = {
         logger.trace('Connecting to MQTT broker...');
         logger.trace(mqttOptions, 'With MQTT options...');
         const client = await mqtt.connectAsync(`tcp://${args.mqttbroker}`, mqttOptions)
+        console.log(client);
         try {
             logger.trace('Publishing data to MQTT...');
             await client.publish(`${args.mqtttopic}/state`, JSON.stringify(data));
