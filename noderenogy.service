@@ -4,12 +4,12 @@ Description=NodeRenogy Service
 [Service]
 ExecStart=/usr/bin/node /home/pi/NodeRenogy/index.js -s /dev/ttyUSB0 -m 192.168.199.10
 Restart=always
-User=nobody
+User=pi
 # Note Debian/Ubuntu uses 'nogroup', RHEL/Fedora uses 'nobody'
-Group=nogroup
+Group=pi
 Environment=PATH=/usr/bin:/usr/local/bin
 Environment=NODE_ENV=production
-WorkingDirectory=/home/pi/NodeRenogy
+WorkingDirectory=/home/pi/NodeRenogy     
 
 [Install]
 WantedBy=multi-user.target
