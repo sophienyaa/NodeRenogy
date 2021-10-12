@@ -3,7 +3,6 @@ const mqtt = require('async-mqtt');
 const logger = require('./logger');
 const args = cli.args;
 
-const client = mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions);
 
 
 const mqttOptions = {
@@ -11,6 +10,9 @@ const mqttOptions = {
     password: args.mqttpass,
     clientId: `nodeRenogy_${Math.random().toString(16).substr(2,8)}`    
 };
+
+const client = mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions);
+
 
 module.exports = {
     publish: async function(data) {
