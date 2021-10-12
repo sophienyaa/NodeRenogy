@@ -97,7 +97,7 @@ module.exports = {
             process.exit(1);
         }
     },
-    getControllerInfo: function() {
+    getControllerInfo: async function() {
         try{
             if(!modbusClient.isOpen) {
                 this.begin();
