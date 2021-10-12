@@ -70,13 +70,9 @@ Once you've got NodeJS installed, then follow the below instructions.
 
 2. Change to the `NodeRenogy` directory and install the dependancies by running the below commands
 
-`cd NodeRenogy`
+  - Change to the directory you cloned the code into: `cd NodeRenogy`
 
-`npm install`
-
-This will download the dependancies and create a `node-renogy` command you can run.
-
-3. Run the utility on the device your controller is connected to, see below for examples.
+  - Run installer: `npm install`
 
 ### Running the utility
 
@@ -130,18 +126,17 @@ WorkingDirectory=/home/pi/NodeRenogy
 [Install]
 WantedBy=multi-user.target
 ```
-
 Note the `Environment=...` lines, set any configuration options here such as serial port, mqtt broker, interval, etc.
 
 2. Name this file `noderenogy.service` and save it in `/etc/systemd/system`
 
 3. Run the following commands;
 
-To start the service `systemctl start noderenogy`
+  - To start the service: `systemctl start noderenogy`
 
-To check the logs/ensure its running `journalctl -u noderenogy`
+  - To check the logs/ensure its running: `journalctl -u noderenogy`
 
-To enable the service to run at startup `systemctl enable noderenogy`
+  - To enable the service to run at startup: `systemctl enable noderenogy`
 
 ## Getting data into Home Assistant
 
