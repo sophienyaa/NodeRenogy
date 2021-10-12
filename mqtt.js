@@ -15,6 +15,7 @@ module.exports = {
         logger.trace(mqttOptions, 'With MQTT options...');
         const client = await mqtt.connectAsync(`tcp://${args.mqttbroker}`, mqttOptions)
         try {
+            logger.trace('Publishing to MQTT...');
             await client.publish(`${args.mqtttopic}/state`, JSON.stringify(data));
             await client.end();
         } catch (e){
