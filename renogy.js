@@ -81,6 +81,7 @@ module.exports = {
         try {
             modbusClient.setTimeout(500);
             await modbusClient.connectRTUBuffered(args.serialport, { baudRate: args.baudrate });
+            logger.trace('Connected to controller!');
         }
         catch(e) {
             logger.error(e);
@@ -97,6 +98,7 @@ module.exports = {
                 let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
                 if(data.data) {
                     renogyValues.setData(data.data);
+                    logger.trace(renogyValues, 'Got data from controller...');
                     return renogyValues;
                 }
             }
