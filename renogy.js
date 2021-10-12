@@ -16,9 +16,9 @@ const renogyValues = {
         //Register 0x102 - Battery Charge Current - 2
         this.battC = (rawData[2] * 0.01).toFixed(2);
         
-        var buf = new Buffer(4);
+        /*var buf = new Buffer(4);
         buf.writeUInt8(rawData[3]);
-        console.log(buf);
+        console.log(buf);*/
 
         //TODO: Register 0x103 - Battery Temperature - 3
         /*this.battTemp = function() {
