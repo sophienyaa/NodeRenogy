@@ -11,16 +11,14 @@ const mqttOptions = {
 
 logger.trace('Connecting to MQTT broker...');
 logger.trace(mqttOptions, 'With MQTT options...');
-const client = mqtt.connect(`tcp://${args.mqttbroker}`, mqttOptions)
 
-if(client.connected) {
-    logger.info('Connected to MQTT Broker!');
-}
+
 
 module.exports = {
     publish: async function(data) {
         try {
-            logger.trace('Publishing to MQTT!');
+            const client = await mqtt.connectAsync(`tcp://${args.mqttbroker}`, mqttOptions)
+            logger.trace('Publishing to MQTT !');
             await client.publish(`${args.mqtttopic}/state`, JSON.stringify(data));
             await client.end();
         } catch (e){
