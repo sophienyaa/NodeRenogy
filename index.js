@@ -13,14 +13,19 @@ async function main() {
         logger.trace(args, 'With arguments...')
         await renogy.begin();
 
-        await renogy.getControllerInfo();
+        const controllerInfo = await renogy.getControllerInfo();
+        logger.trace(controllerInfo, 'Controller Info...');
+
+        if(args.mqttbroker) {
+            await mqtt.publish(controllerInfo, 'device');
+        }
 
         setInterval(
             async function() {
                 const result = await renogy.getData();   
 
                 if(args.mqttbroker) {
-                    await mqtt.publish(result);
+                    await mqtt.publish(result, 'state');
                 }
                 else {
                     logger.trace('No MQTT broker specified!');
