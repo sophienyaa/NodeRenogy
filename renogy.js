@@ -90,12 +90,12 @@ const controllerInfo = {
         x0a.writeInt16BE(rawData[0]);
         this.controllerV = x0a[0];
         this.controllerC = x0a[1];
-        //Register 0x0B - Controller discharge current and type - 0
+        //Register 0x0B - Controller discharge current and type - 1
         const x0b = Buffer.alloc(2)
         x0b.writeInt16BE(rawData[1]);
         this.controllerDischgC = x0b[0];
         this.controllerType = x0b[1] == 0 ? 'Controller' : 'Inverter';
-        //Registers 0x0C to 0x13 - Product Model String
+        //Registers 0x0C to 0x13 - Product Model String - 2-7
         let modelString = '';
         for (let i = 0; i <= 5; i++) {  
             rawData[i+2].toString(16).match(/.{1,2}/g).forEach( x => {
@@ -103,13 +103,20 @@ const controllerInfo = {
             });
         }
         this.controllerModel = modelString.replace(' ','');
-        //Registers 0x014 to 0x015 - Software Version
+        //Registers 0x014 to 0x015 - Software Version - 8-9
+        const x14 = Buffer.alloc(4);
+        x14.writeInt16BE(rawData[8]);
+        x14.writeInt16BE(rawData[9],2);
 
-        //Registers 0x016 to 0x017 - Hardware Version
+        console.log(x14);
 
-        //Registers 0x018 ti 0x019 - Product Serial Number
 
-        //Register 0x01A - Controller MODBUS address
+        //Registers 0x016 to 0x017 - Hardware Version - 10-11
+
+        //Registers 0x018 to 0x019 - Product Serial Number - 12-13
+
+        //Register 0x01A - Controller MODBUS address 14
+        this.controllerAddress = rawData[14];
 
     }
 };
