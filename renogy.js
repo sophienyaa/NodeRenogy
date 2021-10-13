@@ -3,8 +3,12 @@ const logger = require('./logger');
 const ModbusRTU = require("modbus-serial");
 const modbusClient = new ModbusRTU();
 
-const startRegister = 0x100;
-const numRegisters = 30;
+const dataStartRegister = 0x100;
+const numDataRegisters = 30;
+
+const infoStartRegister = 0x00A;
+const numInfomRegisters = 15;
+
 const args = cli.args;
 
 const renogyValues = {
@@ -18,7 +22,7 @@ const renogyValues = {
         
         //Register 0x103 - Battery/Controller Temperature - 3
         //0x103 returns two bytes, one for battery and one for controller temp in c
-        var buf = Buffer.alloc(2)
+        const buf = Buffer.alloc(2)
         buf.writeInt16BE(rawData[3]);
         this.battT = buf[0];
         this.controlT = buf[1];
@@ -59,9 +63,48 @@ const renogyValues = {
         //Register 0x115- Controller Uptime (Days) - 21
         this.uptime = rawData[21];
         //TODO: More registers
-
     }
 };
+
+const controllerInfo = {
+    setData: function(rawData) { 
+        //Register 0x0A - Controller voltage and Current Rating - 0
+        const x0a = Buffer.alloc(2)
+        x0a.writeInt16BE(rawData[0]);
+        this.controllerV = x0a[0];
+        this.controllerC = x0a[1];
+        //Register 0x0B - Controller discharge current and type - 0
+        const x0b = Buffer.alloc(2)
+        x0b.writeInt16BE(rawData[1]);
+        this.controllerDischgC = x0b[0];
+        this.controllerType = x0b[1] == 0 ? 'Controller' : 'Inverter';
+        //Registers 0x0C to 0x13 - Product Model
+        const x0c = Buffer.alloc(16);
+        for (let i = 0; i < cars.length; i++) {
+
+
+    }}
+};
+
+
+async function readController(startRegister, numRegisters) {
+    try {
+        if(!modbusClient.isOpen) {
+            this.begin();
+        }
+        if(modbusClient.isOpen) {
+            let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
+            if(data.data) {
+                logger.trace(data.data, 'Raw data from controller:');
+                return data.data;
+            }
+        }
+    }
+    catch(e) {
+        logger.error(e);
+        process.exit(1);
+    }
+}
 
 module.exports = {
     begin: async function(){
@@ -78,46 +121,11 @@ module.exports = {
     },
     getData: async function() {
         logger.trace('Getting data from controller...');
-        try{
-            if(!modbusClient.isOpen) {
-                this.begin();
-            }
-            if(modbusClient.isOpen) {
-                let data =  await modbusClient.readHoldingRegisters(startRegister, numRegisters);
-                if(data.data) {
-                    logger.trace(data.data, 'Raw data from controller:');
-                    renogyValues.setData(data.data);
-                    logger.trace(renogyValues, 'Calculated data from controller:');
-                    return renogyValues;
-                }
-            }
-        }
-        catch(e) {
-            logger.error(e);
-            process.exit(1);
-        }
+
     },
     getControllerInfo: async function() {
-        try{
-            if(!modbusClient.isOpen) {
-                this.begin();
-            }
-            if(modbusClient.isOpen) {
-                //first 15 registers contain controller information
-                let data =  await modbusClient.readHoldingRegisters(0x00A, 1);
-                if(data.data) {
-                    /*logger.trace(data.data, 'Raw data from controller:');
-                    renogyValues.setData(data.data);
-                    logger.trace(renogyValues, 'Calculated data from controller:');
-                    return renogyValues;*/
-                    console.log(data.data);
-                    console.log(data.data[0].toString(16))
-                }
-            }
-        }
-        catch(e) {
-            logger.error(e);
-            process.exit(1);
-        }
+        logger.trace('Getting information about controller...');
+        const rawData = await readController(infoStartRegister, numInfomRegisters);
+        return controllerInfo.setData(rawData);
     }
 }
