@@ -80,6 +80,7 @@ const controllerInfo = {
         const x0c = Buffer.alloc(16);
         for (let i = 0; i <= 5; i++) {  
             console.log(i);
+            console.log(rawData[i+2]);
             x0c.writeInt16BE(rawData[i+2], i);
         }
         console.log(x0c);
