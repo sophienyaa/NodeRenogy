@@ -80,11 +80,11 @@ const controllerInfo = {
         const x0c = Buffer.alloc(16);
         let combinedModel;
         for (let i = 0; i <= 5; i++) {  
-            combinedModel+=rawData[i+2];
+            combinedModel+= rawData[i+2].toString(16);
         }
         console.log(combinedModel);
 
-        console.log(combinedModel.toString('utf8'));
+        //console.log(combinedModel.toString('utf8'));
     }
 };
 
