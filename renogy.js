@@ -6,7 +6,7 @@ const modbusClient = new ModbusRTU();
 const dataStartRegister = 0x100;
 const numDataRegisters = 30;
 const infoStartRegister = 0x00A;
-const numInfomRegisters = 16;
+const numInfomRegisters = 17;
 
 const args = cli.args;
 
@@ -125,7 +125,7 @@ const controllerInfo = {
         console.log(x18);
 
         //Register 0x01A - Controller MODBUS address 16
-        this.controllerAddress = rawData[15];
+        this.controllerAddress = rawData[16];
 
     }
 };
