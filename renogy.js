@@ -82,9 +82,8 @@ const controllerInfo = {
         for (let i = 0; i <= 5; i++) {  
             combinedModel+= rawData[i+2].toString(16);
         }
-
-        let target = [];
-        target.push(Array.from(combinedModel).splice(0,2).join(''), 2);
+        const target = [];
+        for ( const array = Array.from(source); array.length; target.push(array.splice(0,2).join(''), 2) );
         console.log(target);
 
 
