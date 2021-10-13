@@ -16,19 +16,13 @@ const renogyValues = {
         //Register 0x102 - Battery Charge Current - 2
         this.battC = (rawData[2] * 0.01).toFixed(2);
         
-        var buf = new Buffer(4);
+        //Register 0x103 - Battery/Controller Temperature - 3
+        //0x103 returns two bytes, one for battery and one for controller temp in c
+        var buf = Buffer.alloc(2)
         buf.writeInt16BE(rawData[3]);
-        console.log(buf);
+        this.battT = buf.length == 2 ? parseInt(buf[0], 16) : null;
+        this.controlT = buf.length == 2 ? parseInt(buf[1], 16) : null;
 
-        //TODO: Register 0x103 - Battery Temperature - 3
-        /*this.battTemp = function() {
-            const tempBits = rawData[3] >> 8;
-            tempVal = tempBits + 0xff;
-            sign = tempBits >> 7;
-            result = sign == 1 ? -(tempVal-128) : tempVal;
-            return result;
-        }*/
-        
         //Register 0x104 - Load Voltage - 4
         this.loadV = (rawData[4] * 0.1).toFixed(2);
         //Register 0x105 - Load Current - 5
