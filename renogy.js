@@ -79,7 +79,7 @@ const controllerInfo = {
         //Registers 0x0C to 0x13 - Product Model
         const x0c = Buffer.alloc(16);
         for (let i = 0; i <= 5; i++) { 
-            x0c.writeInt16BE(rawData[i+3], i);
+            x0c.writeInt16BE(rawData[i+2], i);
         }
         console.log(x0c);
         console.log(x0c.toString('utf8'));
