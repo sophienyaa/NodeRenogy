@@ -82,7 +82,8 @@ const controllerInfo = {
         let res = [];
         for (let i = 0; i <= 5; i++) {  
             //combinedModel+= ;
-            combinedHex += rawData[i+2].toString(16).match(/.{1,2}/g).join('');
+            console.log(rawData[i+2].toString(16).match(/.{1,2}/g))
+            combinedHex += rawData[i+2].toString(16).match(/.{1,2}/g).join();
 
         }
         console.log(combinedHex);
