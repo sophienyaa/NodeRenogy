@@ -81,6 +81,7 @@ const controllerInfo = {
         for (let i = 0; i <= 5; i++) { 
             x0c.writeInt16BE(rawData[i+11], i);
         }
+        console.log(x0c);
         console.log(x0c.toString('utf8'));
     }
 };
