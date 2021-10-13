@@ -83,9 +83,12 @@ const controllerInfo = {
         for (let i = 0; i <= 5; i++) {  
             //combinedModel+= ;
             rawData[i+2].toString(16).match(/.{1,2}/g).forEach( x => {
-                modelString += parseInt(x, 16).toString('utf8');
+                modelString += String.fromCharCode(parseInt(x, 16));
+                //parseInt(x, 16).toString('utf8');
             });
-            combinedHex += rawData[i+2].toString(16).match(/.{1,2}/g).join();
+
+
+            //combinedHex += rawData[i+2].toString(16).match(/.{1,2}/g).join();
 
         }
         console.log(modelString);
