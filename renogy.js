@@ -125,9 +125,8 @@ module.exports = {
     getControllerInfo: async function() {
         logger.trace('Getting information about controller...');
         const rawData = await readController(infoStartRegister, numInfomRegisters);
-
-        console.log(controllerInfo.setData(rawData));
-
-        return controllerInfo.setData(rawData);
+        controllerInfo.setData(rawData);
+        console.log(controllerInfo);
+        return controllerInfo;
     }
 }
