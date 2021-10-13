@@ -78,13 +78,13 @@ const controllerInfo = {
         this.controllerType = x0b[1] == 0 ? 'Controller' : 'Inverter';
         //Registers 0x0C to 0x13 - Product Model
         const x0c = Buffer.alloc(16);
-        let combinedModel = '';
+        let combinedModel;
         for (let i = 0; i <= 5; i++) {  
-            combinedModel+= String.fromCharCode(rawData[i+2]);
+            combinedModel+= String.fromCharCode(parseInt(rawData[i+2].toString(16),16));
         }
         console.log(combinedModel);
 
-        //console.log(combinedModel.toString('utf8'));
+       // console.log(combinedModel.toString('utf8'));
     }
 };
 
