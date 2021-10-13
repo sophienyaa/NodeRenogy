@@ -108,15 +108,21 @@ const controllerInfo = {
         
         //Registers 0x014 to 0x015 - Software Version - 10-11
         const x14 = Buffer.alloc(4);
-        x14.writeInt16BE(rawData[8]);
-        x14.writeInt16BE(rawData[9],2);
-
+        x14.writeInt16BE(rawData[10]);
+        x14.writeInt16BE(rawData[11],2);
         console.log(x14);
 
-
         //Registers 0x016 to 0x017 - Hardware Version - 12-13
+        const x16 = Buffer.alloc(4);
+        x14.writeInt16BE(rawData[12]);
+        x14.writeInt16BE(rawData[13],2);
+        console.log(x16);
 
         //Registers 0x018 to 0x019 - Product Serial Number - 14-15
+        const x18 = Buffer.alloc(4);
+        x14.writeInt16BE(rawData[14]);
+        x14.writeInt16BE(rawData[15],2);
+        console.log(x18);
 
         //Register 0x01A - Controller MODBUS address 16
         this.controllerAddress = rawData[15];
