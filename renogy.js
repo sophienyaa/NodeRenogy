@@ -78,9 +78,9 @@ const controllerInfo = {
         this.controllerType = x0b[1] == 0 ? 'Controller' : 'Inverter';
         //Registers 0x0C to 0x13 - Product Model
         const x0c = Buffer.alloc(16);
-        let combinedModel;
+        let combinedModel = '';
         for (let i = 0; i <= 5; i++) {  
-            combinedModel+= rawData[i+2].toString(16);
+            combinedModel+= String.fromCharCode(rawData[i+2]);
         }
         console.log(combinedModel);
 
