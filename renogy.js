@@ -18,14 +18,12 @@ const renogyValues = {
         this.battV = (rawData[1] * 0.1).toFixed(2);
         //Register 0x102 - Battery Charge Current - 2
         this.battC = (rawData[2] * 0.01).toFixed(2);
-        
         //Register 0x103 - Battery/Controller Temperature - 3
         //0x103 returns two bytes, one for battery and one for controller temp in c
         const buf = Buffer.alloc(2)
         buf.writeInt16BE(rawData[3]);
         this.battT = buf[0];
         this.controlT = buf[1];
-
         //Register 0x104 - Load Voltage - 4
         this.loadV = (rawData[4] * 0.1).toFixed(2);
         //Register 0x105 - Load Current - 5
@@ -61,6 +59,27 @@ const renogyValues = {
         this.dischgWHToday = (rawData[20]).toFixed(2);
         //Register 0x115- Controller Uptime (Days) - 21
         this.uptime = rawData[21];
+        //Register 0x116- Total Battery Over-charges - 22
+        this.totalBattOvercharge = rawData[22];
+        //Register 0x117- Total Battery Full Charges - 23
+        this.totalBattFullCharges = rawData[23];
+
+        //Registers 0x118 to 0x119- Total Charging Amp-Hours - 24/25
+        //this.totalChargeAH = rawData[24];
+
+        //Registers 0x11A to 0x11B- Total Discharging Amp-Hours - 26/27
+        //this.totalChargeAH = rawData[24];
+
+        //Registers 0x11C to 0x11D- Total Cumulative power generation (kWH) - 28/29
+        //this.totalChargeAH = rawData[24];
+
+        //Registers 0x11E to 0x11F- Total Cumulative power consumption (kWH) - 30/31
+        //this.totalChargeAH = rawData[24];
+
+        //Register 0x120 - Load Status, Load Brightness, Charging State - 32
+
+        //Registers 0x121 to 0x122 - Controller fault codes - 33/34
+
         //TODO: More registers
     }
 };
@@ -76,27 +95,22 @@ const controllerInfo = {
         x0b.writeInt16BE(rawData[1]);
         this.controllerDischgC = x0b[0];
         this.controllerType = x0b[1] == 0 ? 'Controller' : 'Inverter';
-        //Registers 0x0C to 0x13 - Product Model
-        const x0c = Buffer.alloc(16);
+        //Registers 0x0C to 0x13 - Product Model String
         let modelString = '';
-        let res = [];
         for (let i = 0; i <= 5; i++) {  
-            //combinedModel+= ;
             rawData[i+2].toString(16).match(/.{1,2}/g).forEach( x => {
                 modelString += String.fromCharCode(parseInt(x, 16));
-                //parseInt(x, 16).toString('utf8');
             });
-
-
-            //combinedHex += rawData[i+2].toString(16).match(/.{1,2}/g).join();
-
         }
-        console.log(modelString);
+        this.controllerModel = modelString.replace(' ','');
+        //Registers 0x014 to 0x015 - Software Version
 
+        //Registers 0x016 to 0x017 - Hardware Version
 
-        //console.log(combinedModel);
+        //Registers 0x018 ti 0x019 - Product Serial Number
 
-       // console.log(combinedModel.toString('utf8'));
+        //Register 0x01A - Controller MODBUS address
+
     }
 };
 
