@@ -82,7 +82,6 @@ const controllerInfo = {
         const x0c = Buffer.alloc(16);
         //for (let i = 0; i < cars.length; i++) {
 
-
     }
 };
 
@@ -126,6 +125,9 @@ module.exports = {
     getControllerInfo: async function() {
         logger.trace('Getting information about controller...');
         const rawData = await readController(infoStartRegister, numInfomRegisters);
+
+        console.log(controllerInfo.setData(rawData));
+
         return controllerInfo.setData(rawData);
     }
 }
