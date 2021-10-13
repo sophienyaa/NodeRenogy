@@ -5,7 +5,6 @@ const modbusClient = new ModbusRTU();
 
 const dataStartRegister = 0x100;
 const numDataRegisters = 30;
-
 const infoStartRegister = 0x00A;
 const numInfomRegisters = 15;
 
@@ -65,7 +64,6 @@ const renogyValues = {
         //TODO: More registers
     }
 };
-
 const controllerInfo = {
     setData: function(rawData) { 
         //Register 0x0A - Controller voltage and Current Rating - 0
@@ -84,7 +82,6 @@ const controllerInfo = {
 
     }
 };
-
 
 async function readController(startRegister, numRegisters) {
     try {
@@ -120,13 +117,15 @@ module.exports = {
     },
     getData: async function() {
         logger.trace('Getting data from controller...');
+        const rawData = await readController(dataStartRegister, numDataRegisters);
+        renogyValues.setData(rawData);
+        return renogyValues;
 
     },
     getControllerInfo: async function() {
         logger.trace('Getting information about controller...');
         const rawData = await readController(infoStartRegister, numInfomRegisters);
         controllerInfo.setData(rawData);
-        console.log(controllerInfo);
         return controllerInfo;
     }
 }
