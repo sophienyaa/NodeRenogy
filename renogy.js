@@ -83,7 +83,7 @@ const controllerInfo = {
         //for (let i = 0; i < cars.length; i++) {
 
 
-    }}
+    }
 };
 
 
