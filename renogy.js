@@ -20,10 +20,8 @@ const renogyValues = {
         //0x103 returns two bytes, one for battery and one for controller temp in c
         var buf = Buffer.alloc(2)
         buf.writeInt16BE(rawData[3]);
-        console.log(buf[0]);
-        console.log(buf[1]);
-        this.battT = buf.length == 2 ? parseInt(buf[0], 16) : null;
-        this.controlT = buf.length == 2 ? parseInt(buf[1], 16) : null;
+        this.battT = buf[0];
+        this.controlT = buf[1];
 
         //Register 0x104 - Load Voltage - 4
         this.loadV = (rawData[4] * 0.1).toFixed(2);
