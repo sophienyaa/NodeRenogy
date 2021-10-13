@@ -119,11 +119,10 @@ const controllerInfo = {
         this.hardwareVersion = `V${x16[1]}.${x16[2]}.${x16[3]}`
 
         //Registers 0x018 to 0x019 - Product Serial Number - 14-15
-        const x18 = Buffer.alloc(4);
-        x18.writeInt16BE(rawData[14]);
-        x18.writeInt16BE(rawData[15],2);
-        console.log(x18);
-
+        let serialHex = rawData[14].toString(16);
+        serialHex += rawData[15].toString(16);
+        this.serialNumber = parseInt(serialHex, 16);
+        
         //Register 0x01A - Controller MODBUS address 16
         this.controllerAddress = rawData[16];
 
