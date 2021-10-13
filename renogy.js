@@ -110,13 +110,13 @@ const controllerInfo = {
         const x14 = Buffer.alloc(4);
         x14.writeInt16BE(rawData[10]);
         x14.writeInt16BE(rawData[11],2);
-        console.log(x14);
+        this.softwareVersion = `V${x14[1]}.${x14[2]}.${x14[3]}`
 
         //Registers 0x016 to 0x017 - Hardware Version - 12-13
         const x16 = Buffer.alloc(4);
         x16.writeInt16BE(rawData[12]);
         x16.writeInt16BE(rawData[13],2);
-        console.log(x16);
+        this.hardwareVersion = `V${x16[1]}.${x16[2]}.${x16[3]}`
 
         //Registers 0x018 to 0x019 - Product Serial Number - 14-15
         const x18 = Buffer.alloc(4);
