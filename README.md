@@ -4,6 +4,8 @@ Utility to retrieve data from Renogy solar controllers and publish it to MQTT, w
 
 Data can then be surfaced in Home Assistant, or anything else that can read from a MQTT bus.
 
+It currently doesn't support all registers, however I will be continuing to add support for them.
+
 ## Compatibility
 
 See below table, in theory this should work with any Renogy solar controller, but the below have been tested.
@@ -12,6 +14,49 @@ If you have success with one not listed here, please let me know by raising an i
 |Controller|Interface|Notes|Status|
 |----------|---------|-----|------|
 |Renogy Wanderer|RS232|Has no switched load, so load values are always 0|✅|
+
+## Supported Registers
+
+The below is a list of supported registers for device information:
+|Register|Description|Unit|
+|--------|-----------|-----|
+|0x00A|Controller voltage rating|Volts|
+|0x00A|Controller current rating|Amps|
+|0x00B|Controller discharge current rating|Amps|
+|0x00B|Controller type||
+|0x00C - 0x013|Controller model name||
+|0x014 - 0x015|Controller software version||
+|0x016 - 0x017|Controller hardware version||
+|0x018 - 0x019|Controller serial number||
+|0x01A|Controller MODBUS address||
+
+The below is a list of supported registers for state data:
+|Register|Description|Unit|
+|--------|-----------|-----|
+|0x100|Battery Capacity|Percent|
+|0x101|Battery Voltage|Volts|
+|0x102|Battery Charge Current|Amps|
+|0x103|Battery Temperature|Celcius|
+|0x103|Controller Temperature|Celcius|
+|0x104|Load Voltage|Volts|
+|0x105|Load Current|Amps|
+|0x106|Load Power|Watts|
+|0x107|Solar Panel (PV) Voltage|Volts|
+|0x108|Solar Panel (PV) Current|Amps|
+|0x109|Solar Panel (PV) Power|Watts|
+|0x10B|Min Battery Voltage Today|Volts|
+|0x10C|Min Battery Voltage Today|Volts|
+|0x10D|Max Charge Current Today|Amps|
+|0x10E|Max Discharge Current Today|Amps|
+|0x10F|Max Charge Power Today|Watts|
+|0x110|Max Discharge Power Today|Watts|
+|0x111|Charge Amp/Hrs Today|Amp Hours|
+|0x112|Discharge Amp/Hrs Today|Amp Hours|
+|0x113|Charge Watt/Hrs Today|Watt Hours|
+|0x114|Discharge Watt/Hrs Today|Watt Hours|
+|0x115|Controller Uptime|Days|
+|0x116|Total Battery Over-charges|Count|
+|0x117|Total Battery Full Charges|Count|
 
 ## Connecting your Controller
 
@@ -70,9 +115,9 @@ Once you've got NodeJS installed, then follow the below instructions.
 
 2. Change to the `NodeRenogy` directory and install the dependencies by running the below commands
 
-  - Change to the directory you cloned the code into: `cd NodeRenogy`
+ |Change to the directory you cloned the code into: `cd NodeRenogy`
 
-  - Run installer: `npm install`
+ |Run installer: `npm install`
 
 ### Running the utility
 
@@ -132,11 +177,11 @@ Note the `Environment=...` lines, set any configuration options here such as ser
 
 3. Run the following commands:
 
-  - To start the service: `systemctl start noderenogy`
+ |To start the service: `systemctl start noderenogy`
 
-  - To check the logs/ensure its running: `journalctl -u noderenogy`
+ |To check the logs/ensure its running: `journalctl -u noderenogy`
 
-  - To enable the service to run at startup: `systemctl enable noderenogy`
+ |To enable the service to run at startup: `systemctl enable noderenogy`
 
 ## Publishing to MQTT
 
@@ -203,7 +248,7 @@ See below for some examples:
 
 ```
 sensor:
-  - platform: mqtt
+ |platform: mqtt
     name: "Current Battery Capacity"
     state_topic: "NodeRenogy/state"
     value_template: "{{ value_json['battCap'] }}"
