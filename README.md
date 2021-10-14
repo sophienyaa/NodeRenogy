@@ -116,8 +116,8 @@ Once you've got NodeJS installed, then follow the below instructions.
 2. Change to the `NodeRenogy` directory and install the dependencies by running the below commands
 
  - Change to the directory you cloned the code into: `cd NodeRenogy`
-
- - Run installer: `npm install`
+ - Run installer: `npm install` 
+ - Link command: `sudo npm link`
 
 ### Running the utility
 
