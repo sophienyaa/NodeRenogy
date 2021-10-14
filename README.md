@@ -115,9 +115,9 @@ Once you've got NodeJS installed, then follow the below instructions.
 
 2. Change to the `NodeRenogy` directory and install the dependencies by running the below commands
 
- |Change to the directory you cloned the code into: `cd NodeRenogy`
+ - Change to the directory you cloned the code into: `cd NodeRenogy`
 
- |Run installer: `npm install`
+ - Run installer: `npm install`
 
 ### Running the utility
 
@@ -177,11 +177,11 @@ Note the `Environment=...` lines, set any configuration options here such as ser
 
 3. Run the following commands:
 
- |To start the service: `systemctl start noderenogy`
+ - To start the service: `systemctl start noderenogy`
 
- |To check the logs/ensure its running: `journalctl -u noderenogy`
+ - To check the logs/ensure its running: `journalctl -u noderenogy`
 
- |To enable the service to run at startup: `systemctl enable noderenogy`
+ - To enable the service to run at startup: `systemctl enable noderenogy`
 
 ## Publishing to MQTT
 
