@@ -10,6 +10,15 @@ const numInfomRegisters = 17;
 
 const args = cli.args;
 
+const chargingModes = new Map();
+map1.set(0, 'Not Charging');
+map1.set(1, 'Charging');
+map1.set(2, 'MPPT Mode');
+map1.set(3, 'Equalizing Mode');
+map1.set(4, 'Boost Charging');
+map1.set(5, 'Float Charging');
+map1.set(6, 'Over Power');
+
 const renogyValues = {
     setData: function(rawData) {
         //Register 0x100 - Battery Capacity - 0
@@ -68,15 +77,19 @@ const renogyValues = {
         //this.totalChargeAH = rawData[24];
 
         //Registers 0x11A to 0x11B- Total Discharging Amp-Hours - 26/27
-        //this.totalChargeAH = rawData[24];
+        //this.totalChargeAH = rawData[25];
 
         //Registers 0x11C to 0x11D- Total Cumulative power generation (kWH) - 28/29
-        //this.totalChargeAH = rawData[24];
+        //this.totalChargeAH = rawData[26];
 
         //Registers 0x11E to 0x11F- Total Cumulative power consumption (kWH) - 30/31
-        //this.totalChargeAH = rawData[24];
+        //this.totalChargeAH = rawData[27];
 
         //Register 0x120 - Load Status, Load Brightness, Charging State - 32
+        const loadBuf = Buffer.alloc(2)
+        loadBuf.writeInt16BE(rawData[27]);
+        this.loadStatus = loadBuf[0]; //TODO: parse data
+        this.chgState = chargingModes.get(loadBuf[1]);
 
         //Registers 0x121 to 0x122 - Controller fault codes - 33/34
 
