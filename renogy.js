@@ -11,13 +11,13 @@ const numInfomRegisters = 17;
 const args = cli.args;
 
 const chargingModes = new Map();
-map1.set(0, 'Not Charging');
-map1.set(1, 'Charging');
-map1.set(2, 'MPPT Mode');
-map1.set(3, 'Equalizing Mode');
-map1.set(4, 'Boost Charging');
-map1.set(5, 'Float Charging');
-map1.set(6, 'Over Power');
+chargingModes.set(0, 'Not Charging');
+chargingModes.set(1, 'Charging');
+chargingModes.set(2, 'MPPT Mode');
+chargingModes.set(3, 'Equalizing Mode');
+chargingModes.set(4, 'Boost Charging');
+chargingModes.set(5, 'Float Charging');
+chargingModes.set(6, 'Over Power');
 
 const renogyValues = {
     setData: function(rawData) {
