@@ -1,0 +1,126 @@
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+sensor:
+  - platform: mqtt
+    name: "Current Battery Capacity"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battCap'] }}"
+    unit_of_measurement: "%"
+    device_class: battery
+
+  - platform: mqtt
+    name: "Current Battery Voltage"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battV'] }}"
+    unit_of_measurement: "V"
+    device_class: battery
+
+  - platform: mqtt
+    name: "Current Battery Temperature"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battT'] }}"
+    unit_of_measurement: "C"
+    device_class: temperature
+
+  - platform: mqtt
+    name: "Current Controller Temperature"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['controlT'] }}"
+    unit_of_measurement: "C"
+    device_class: temperature
+
+  - platform: mqtt
+    name: "Minimum Battery Voltage Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battVMinToday'] }}"
+    unit_of_measurement: "V"
+    device_class: battery
+
+  - platform: mqtt
+    name: "Maximum Battery Voltage Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battVMaxToday'] }}"
+    unit_of_measurement: "V"
+    device_class: battery
+
+  - platform: mqtt
+    name: "Solar Panel Output Voltage"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['solarV'] }}"
+    unit_of_measurement: "V"
+    device_class: voltage
+
+  - platform: mqtt
+    name: "Solar Panel Output Current"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['solarC'] }}"
+    unit_of_measurement: "A"
+    device_class: current
+
+  - platform: mqtt
+    name: "Solar Panel Output Wattage"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['solarP'] }}"
+    unit_of_measurement: "W"
+    device_class: power
+
+  - platform: mqtt
+    name: "Maximum Output Current Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['chgCMaxToday'] }}"
+    unit_of_measurement: "A"
+    device_class: current
+
+  - platform: mqtt
+    name: "Maximum Output Power Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['chgPMaxToday'] }}"
+    unit_of_measurement: "W"
+    device_class: power
+
+  - platform: mqtt
+    name: "Total Output Current Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['chgAHToday'] }}"
+    unit_of_measurement: "AH"
+    device_class: current
+
+  - platform: mqtt
+    name: "Total Output Power Today"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['chgWHToday'] }}"
+    unit_of_measurement: "WH"
+    device_class: power
+
+  - platform: mqtt
+    name: "Total number of Over Charges"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['totalBattOvercharge'] }}"
+    unit_of_measurement: ""
+    device_class: battery
+
+  - platform: mqtt
+    name: "Charging Status"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['chgState'] }}"
+    unit_of_measurement: ""
+    device_class: battery
+
+  - platform: mqtt
+    name: "Total number of Full Charges"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['totalBattFullCharges'] }}"
+    unit_of_measurement: ""
+    device_class: battery
+
+  - platform: mqtt
+    name: "Controller Uptime"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['uptime'] }}"
+    unit_of_measurement: "Days"
