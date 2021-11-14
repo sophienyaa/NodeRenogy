@@ -14,6 +14,8 @@ If you have success with one not listed here, please let me know by raising an i
 |Controller|Interface|Notes|Status|
 |----------|---------|-----|------|
 |Renogy Wanderer|RS232|Has no switched load, so load values are always 0|✅|
+|Renogy Rover|RS232|Tested with 20A version|✅|
+
 
 ## Supported Registers
 
