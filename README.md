@@ -4,7 +4,17 @@ Utility to retrieve data from Renogy solar controllers and publish it to MQTT, w
 
 Data can then be surfaced in Home Assistant, or anything else that can read from a MQTT bus.
 
-It currently doesn't support all registers, however I will be continuing to add support for them.
+NOTE: This software provides read-only access to your Solar Controller, intended for publshing information to Home Assistant, Grafana, or similar. You can not change any parameters with this software.
+
+This software is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+
+## Thanks
+
+Thanks to [menloparkinnovation](https://github.com/menloparkinnovation) the for [renogy-rover](https://github.com/menloparkinnovation/renogy-rover) that inspired this software.
+
+Thanks to the [Renogy boards](https://renogy.boards.net/thread/266/rover-modbus) for the Protocol docs
+
+Thanks to the [solaranzeige.de boards](https://solaranzeige.de/phpBB3/viewtopic.php?t=693) for pinout information.
 
 ## Compatibility
 
@@ -145,6 +155,8 @@ These options can also be passed as environment variables, by appending `NODEREN
 |--loglevel|-l|NODERENOGY_LOGLEVEL|Sets the logging level, useful for debugging|-l trace|   
 |--help|-h||Show help ||
 |--version|||Show version number|  |    
+
+If you don't specify a MQTT broker, it will simply print the results to the console, this is useful for testing.
 
 ### Running as a service
 
