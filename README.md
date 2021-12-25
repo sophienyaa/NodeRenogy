@@ -205,7 +205,7 @@ The first subtopic is `<topic>/device`. This is published once when the utility 
 
 Example:
 
-```
+```json
 {
   "controllerV":12,
   "controllerC":30,
@@ -222,7 +222,7 @@ Example:
 The second is `<topic>/state` which contains data pulled from the controller, it is published at the interval specified in the configuration (e.g. every 10s).
 
 Example:
-```
+```json
 {
   "battCap":96,
   "battV":"13.10",
@@ -260,15 +260,15 @@ Essentially you just need to extract the values from the JSON payload published 
 
 See below for some examples:
 
-```
+```yaml
 sensor:
- |platform: mqtt
+- platform: mqtt
     name: "Current Battery Capacity"
     state_topic: "NodeRenogy/state"
     value_template: "{{ value_json['battCap'] }}"
     unit_of_measurement: "%"
     device_class: battery
-
+  
 - platform: mqtt
     name: "Current Battery Voltage"
     state_topic: "NodeRenogy/state"
