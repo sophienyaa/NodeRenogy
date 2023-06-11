@@ -4,7 +4,7 @@ const ModbusRTU = require("modbus-serial");
 const modbusClient = new ModbusRTU();
 
 const dataStartRegister = 0x100;
-const numDataRegisters = 30;
+const numDataRegisters = 34;
 const infoStartRegister = 0x00A;
 const numInfomRegisters = 17;
 
@@ -60,25 +60,47 @@ const renogyValues = {
         //Register 0x115- Controller Uptime (Days) - 21
         this.uptime = rawData[21];
         //Register 0x116- Total Battery Over-charges - 22
-        this.totalBattOvercharge = rawData[22];
+        this.totalBattOverDischarges = rawData[22];
         //Register 0x117- Total Battery Full Charges - 23
         this.totalBattFullCharges = rawData[23];
 
         //Registers 0x118 to 0x119- Total Charging Amp-Hours - 24/25
-        //this.totalChargeAH = rawData[24];
-
+        //We have to combine 4 bytes, two from one register, two from a second register.
+        const bufTotAH = Buffer.alloc(4);
+        bufTotAH.writeUInt16BE(rawData[24]);
+        bufTotAH.writeUInt16BE(rawData[25], 2);
+        this.totalChargeAH = bufTotAH.readUInt32BE();
         //Registers 0x11A to 0x11B- Total Discharging Amp-Hours - 26/27
-        //this.totalChargeAH = rawData[24];
-
+        //We have to combine 4 bytes, two from one register, two from a second register.
+        const bufTotDisAH = Buffer.alloc(4);
+        bufTotDisAH.writeUInt16BE(rawData[26]);
+        bufTotDisAH.writeUInt16BE(rawData[27], 2);
+        this.totalDischargeAH = bufTotDisAH.readUInt32BE();
+		
         //Registers 0x11C to 0x11D- Total Cumulative power generation (kWH) - 28/29
-        //this.totalChargeAH = rawData[24];
+		//We have to combine 4 bytes, two from one register, two from a second register.
+        const bufTotWH = Buffer.alloc(4);
+        bufTotWH.writeUInt16BE(rawData[28]);
+        bufTotWH.writeUInt16BE(rawData[29], 2);
+        this.cumulativePowerGenerated = bufTotWH.readUInt32BE();
 
         //Registers 0x11E to 0x11F- Total Cumulative power consumption (kWH) - 30/31
-        //this.totalChargeAH = rawData[24];
+		//We have to combine 4 bytes, two from one register, two from a second register.
+        const bufTotWHC = Buffer.alloc(4);
+        bufTotWHC.writeUInt16BE(rawData[30]);
+        bufTotWHC.writeUInt16BE(rawData[31], 2);
+        this.cumulativePowerConsumed = bufTotWHC.readUInt32BE();
 
         //Register 0x120 - Load Status, Load Brightness, Charging State - 32
+        //0x120 returns two bytes, one for load status, and one for Charging State.
+        const buf2 = Buffer.alloc(2);
+        buf2.writeUInt16BE(rawData[32]);
+        this.loadStatus = mirror_bits(buf2.readUInt8());  //Seems the bits are completely inverted order?
+        this.chargingState = buf2[1];
 
         //Registers 0x121 to 0x122 - Controller fault codes - 33/34
+        this.FaultCodes = rawData[33];
+		//TODO: Decode fault code(s).
 
         //TODO: More registers
     }
@@ -146,6 +168,16 @@ async function readController(startRegister, numRegisters) {
         logger.error(e);
         process.exit(1);
     }
+}
+
+//Reverses the order of bits given an input integer.
+function mirror_bits(n) {
+    let t = n.toString(2).split('');
+    let str_len = t.length;
+    for (let i = 0; i < 8 - str_len; i++) {
+        t.unshift('0');
+    }
+    return parseInt(t.reverse().join(''), 2);
 }
 
 module.exports = {
