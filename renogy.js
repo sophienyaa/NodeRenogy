@@ -44,7 +44,7 @@ const renogyValues = {
         //Register 0x10D - Max Charge Current Today - 13
         this.chgCMaxToday = (rawData[13] * 0.01).toFixed(2);
         //Register 0x10E - Max Discharge Current Today - 14
-        this.dischgCMaxToday = (rawData[14] * 0.1).toFixed(2);
+        this.dischgCMaxToday = (rawData[14] * 0.01).toFixed(2);
         //Register 0x10F - Max Charge Power Today - 15 
         this.chgPMaxToday = (rawData[15]).toFixed(2);
         //Register 0x110- Max Discharge Power Today - 16
