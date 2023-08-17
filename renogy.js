@@ -20,7 +20,12 @@ const renogyValues = {
         this.battC = (rawData[2] * 0.01).toFixed(2);
         //Register 0x103 - Battery/Controller Temperature - 3
         //0x103 returns two bytes, one for battery and one for controller temp in c
-        const buf = Buffer.alloc(2)
+       
+	/*
+        Updating to 32-bit integer to avoid out of range errors. For example:
+            RangeError [ERR_OUT_OF_RANGE]: The value of "value" is out of range. It must be >= -32768 and <= 32767. Received 33024
+        */
+	const buf = Buffer.alloc(2)
         buf.writeInt16BE(rawData[3]);
         this.controlT = buf[0];
         this.battT = buf[1];
