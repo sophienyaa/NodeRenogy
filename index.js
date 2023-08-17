@@ -3,6 +3,7 @@ const cli = require('./cli');
 const mqtt = require('./mqtt');
 const renogy = require('./renogy');
 const logger = require('./logger');
+const writeToFile = require('./writeToFile');
 
 async function main() {
 
@@ -15,6 +16,7 @@ async function main() {
 
         const controllerInfo = await renogy.getControllerInfo();
         logger.trace(controllerInfo, 'Controller Info...');
+        await writeToFile.writeToJSON(controllerInfo, 'device');
 
         if(args.mqttbroker) {
             await mqtt.publish(controllerInfo, 'device');
@@ -23,6 +25,8 @@ async function main() {
         setInterval(
             async function() {
                 const result = await renogy.getData();   
+
+                await writeToFile.writeToJSON(result, 'state');
 
                 if(args.mqttbroker) {
                     await mqtt.publish(result, 'state');
