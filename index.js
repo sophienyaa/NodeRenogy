@@ -16,7 +16,7 @@ async function main() {
 
         const controllerInfo = await renogy.getControllerInfo();
         logger.trace(controllerInfo, 'Controller Info...');
-        await writeToFile.writeToJSON(controllerInfo, 'device');
+        await writeToFile.writeToCSV(controllerInfo, 'device');
 
         if(args.mqttbroker) {
             await mqtt.publish(controllerInfo, 'device');
@@ -26,7 +26,7 @@ async function main() {
             async function() {
                 const result = await renogy.getData();   
 
-                await writeToFile.writeToJSON(result, 'state');
+                await writeToFile.writeToCSV(result, 'state');
 
                 if(args.mqttbroker) {
                     await mqtt.publish(result, 'state');
