@@ -69,4 +69,65 @@ module.exports = {
             logger.error(e);
         }
     }
+    
+    
+    writeToCSV: async function(data, subTopic) {
+        try {
+            // Define vars
+            let dataDir = '/home/supervisor/data/noderenogy/';
+            let hostName = os.hostname();
+
+            let date_time = new Date();
+            // get current date
+            // adjust 0 before single digit date
+            let date = ("0" + date_time.getDate()).slice(-2);
+            // get current month
+            let month = ("0" + (date_time.getMonth() + 1)).slice(-2);
+            // get current year
+            let year = date_time.getFullYear();
+            // get current hours
+            let hours = date_time.getHours();
+            // get current minutes
+            let minutes = date_time.getMinutes();
+            // get current seconds
+            let seconds = ("0" + date_time.getSeconds()).slice(-2);
+
+            // Format data into a CSV string
+            let csvRow = [
+                year + "-" + month + "-" + date,
+                hours + ":" + minutes + ":" + seconds
+            ].join(',');
+
+            // Define filename
+            let fileName = dataDir + hostName + '-' + subTopic + '-' + year + month + date + '.csv';
+
+            // Check if directory exists
+            if (fs.existsSync(dataDir)) {
+
+                // Check if file exists
+                if (!fs.existsSync(fileName)) {
+                    // Create new file if it doesn't exist
+                    fs.closeSync(fs.openSync(fileName, 'w'));
+                    // Add CSV header
+                    fs.appendFileSync(fileName, 'Date,Time,OtherDataHeaders...\n');
+                }
+
+                // Append data to CSV file
+                fs.appendFileSync(fileName, csvRow + '\n');
+
+            } else {
+                console.error("Data directory not found!");
+                console.error("Creating " + dataDir);
+
+                // Create the data directory and restart the function.
+                fs.mkdirSync(dataDir, { recursive: true });
+                this.writeToCSV(data, subTopic);
+            }
+
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
+
 }
