@@ -69,7 +69,8 @@ module.exports = {
             logger.error(e);
         }
     }
-    
+   
+    ,
     
     writeToCSV: async function(data, subTopic) {
         try {
