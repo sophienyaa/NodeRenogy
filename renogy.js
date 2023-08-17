@@ -25,7 +25,7 @@ const renogyValues = {
         Updating to 32-bit integer to avoid out of range errors. For example:
             RangeError [ERR_OUT_OF_RANGE]: The value of "value" is out of range. It must be >= -32768 and <= 32767. Received 33024
         */
-	const buf = Buffer.alloc(2)
+	const buf = Buffer.alloc(4)
         buf.writeInt16BE(rawData[3]);
         this.controlT = buf[0];
         this.battT = buf[1];
