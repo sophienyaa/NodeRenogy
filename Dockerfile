@@ -23,9 +23,12 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Copy necessary files to local docker container environment
 COPY mosquitto.conf /etc/mosquitto/
-ADD 
-ADD 
-ADD 
+ADD cli.js /cli.js
+ADD WriteToFile.js /WriteToFile.js
+ADD index.js /index.js
+ADD logger.js /logger.js
+ADD mqtt.js /mqtt.js
+ADD renogy.js /renogy.js
 #ADD crontab /etc/cron.d/simple-cron
 
 # Create necessary files and directories inside docker container
