@@ -5,10 +5,16 @@ FROM ubuntu:latest
 RUN apt-get update
 
 # Install apt dependencies
-RUN apt-get install -y 
+#RUN apt-get install -y 
 
 # Install pip dependencies
-RUN pip install 
+#RUN pip install 
+
+# Run installer
+RUN npm install
+
+# Link command
+RUN npm link
 
 # Add latest mosquitto repo
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
@@ -29,20 +35,13 @@ ADD index.js /index.js
 ADD logger.js /logger.js
 ADD mqtt.js /mqtt.js
 ADD renogy.js /renogy.js
-#ADD crontab /etc/cron.d/simple-cron
 
 # Create necessary files and directories inside docker container
-#RUN touch /var/log/cron.log
 RUN mkdir -p /Data
 RUN mkdir -p /Data/logs
-
-# Establish correct permissions for files
-#RUN chmod 0644 /etc/cron.d/simple-cron
-RUN chmod +x /PowerMonitor.py
-RUN chmod +x /PowerMonitor.sh
 
 # Start services in container (sleep command to give mosquitto time to start before using)
 CMD service mosquitto start \
     && sleep 5 \
-    #&& cron \
     && bash
+    && node-renogy -s /dev/ttyUSB0 -m IPADDRESS
