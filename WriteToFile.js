@@ -7,7 +7,7 @@ module.exports = {
         try {
             // define vars
             let jsonData = [];
-            let dataDir = '/home/supervisor/data/noderenogy/';
+            let dataDir = '/Data/';
             let hostName = os.hostname();
 
             let date_time = new Date();
@@ -75,7 +75,7 @@ module.exports = {
     writeToCSV: async function(data, subTopic) {
         try {
             // Define vars
-            let dataDir = '/home/supervisor/data/noderenogy/';
+            let dataDir = '/Data/';
             let hostName = os.hostname();
 
             let date_time = new Date();
