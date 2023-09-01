@@ -26,6 +26,7 @@ ADD index.js /index.js
 ADD logger.js /logger.js
 ADD mqtt.js /mqtt.js
 ADD renogy.js /renogy.js
+ADD package-lock.js /package-lock.js
 
 # Create necessary files and directories inside docker container
 RUN mkdir -p /Data
