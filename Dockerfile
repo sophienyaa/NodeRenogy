@@ -10,7 +10,7 @@ RUN npm link
 # Add latest mosquitto repo
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
 
-# Install mosqutto and cron
+# Install mosqutto
 RUN apt-get install -y mosquitto mosquitto-clients
 
 # Install timezone dependencies and establish docker container timezone
