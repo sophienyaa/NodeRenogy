@@ -1,12 +1,6 @@
 # syntax=docker/dockerfile:1
 FROM nodejs:latest
 
-# Run installer
-RUN npm install
-
-# Link command
-RUN npm link
-
 # Add latest mosquitto repo
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
 
@@ -27,6 +21,12 @@ ADD logger.js /logger.js
 ADD mqtt.js /mqtt.js
 ADD renogy.js /renogy.js
 ADD package-lock.js /package-lock.js
+
+# Run installer
+RUN npm install
+
+# Link command
+RUN npm link
 
 # Create necessary files and directories inside docker container
 RUN mkdir -p /Data
