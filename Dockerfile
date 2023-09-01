@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM nodejs:latest
+FROM node:latest
 
 # Add latest mosquitto repo
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
