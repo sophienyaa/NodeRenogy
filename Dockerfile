@@ -1,14 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM ubuntu:latest
-
-# Update package list
-RUN apt-get update
-
-# Install apt dependencies
-#RUN apt-get install -y 
-
-# Install pip dependencies
-#RUN pip install 
+FROM nodejs:latest
 
 # Run installer
 RUN npm install
@@ -20,7 +11,7 @@ RUN npm link
 RUN apt-add-repository ppa:mosquitto-dev/mosquitto-ppa
 
 # Install mosqutto and cron
-RUN apt-get install -y mosquitto mosquitto-clients cron
+RUN apt-get install -y mosquitto mosquitto-clients
 
 # Install timezone dependencies and establish docker container timezone
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata
