@@ -261,18 +261,26 @@ Essentially you just need to extract the values from the JSON payload published 
 See below for some examples:
 
 ```yaml
-sensor:
-- platform: mqtt
-    name: "Current Battery Capacity"
+mqtt:
+  sensor:
+  - name: "Renogy Battery Capacity"
     state_topic: "NodeRenogy/state"
     value_template: "{{ value_json['battCap'] }}"
     unit_of_measurement: "%"
     device_class: battery
-  
-- platform: mqtt
-    name: "Current Battery Voltage"
+  - name: "Renogy Battery Voltage"
     state_topic: "NodeRenogy/state"
     value_template: "{{ value_json['battV'] }}"
     unit_of_measurement: "V"
-    device_class: battery
+    device_class: voltage
+  - name: "Renogy Battery Current"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['battC'] }}"
+    unit_of_measurement: "A"
+    device_class: current
+  - name: "Renogy Temperature"
+    state_topic: "NodeRenogy/state"
+    value_template: "{{ value_json['controlT'] }}"
+    unit_of_measurement: "°C"
+    device_class: temperature****
 ```
