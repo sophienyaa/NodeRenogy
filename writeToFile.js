@@ -74,10 +74,16 @@ module.exports = {
     
     writeToCSV: async function(data, subTopic) {
         try {
-            // Define vars
-            let dataDir = '/Data/';
-            let hostName = os.hostname();
+            // Exclude the 'setData' key from the data object
+            const { setData, ...newData } = data;
+            // Create a CSV header with the keys from the object
+            const header = Object.keys(newData).join(',');
+            // Create a CSV row with the values from the object
+            const values = Object.values(newData).map(value => `"${value}"`).join(',');
 
+            // Define vars
+            let dataDir = '/home/supervisor/Data/NodeRenogy/';
+            let hostName = os.hostname();
             let date_time = new Date();
             // get current date
             // adjust 0 before single digit date
@@ -110,11 +116,10 @@ module.exports = {
                     // Create new file if it doesn't exist
                     fs.closeSync(fs.openSync(fileName, 'w'));
                     // Add CSV header
-                    fs.appendFileSync(fileName, 'Date,Time,OtherDataHeaders...\n');
+                    fs.appendFileSync(fileName, header + '\n');
                 }
-
                 // Append data to CSV file
-                fs.appendFileSync(fileName, csvRow + '\n');
+                fs.appendFileSync(fileName, values + '\n');
 
             } else {
                 console.error("Data directory not found!");
